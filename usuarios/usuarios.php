@@ -20,6 +20,30 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS' ) {
     $request = json_decode($postdata);
     $function = $request->function;
     $function();
+
+    function Login(){
+        require_once('../models/usuarios/usuariosModel.php');
+        global $request;
+        $json = $request->datos;
+        if($json->usuario != '' && $json->contrasena != ''){
+            if(!strlen($json->contrasena) < 6){
+                $response = LoginModel($json);
+            }else{
+                $response = 'La contraseña debe contener minimo 6 caracteres';
+            }
+        }else{
+            $response = 'Debe diligenciar todos los campos';
+        }
+    
+        if(empty($response)){
+            $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
+        }else{
+            $arrResponse = array('status' => true, 'data' => $response);
+        }
+        echo json_encode($arrResponse);
+    }
+
+
     function RegistroUsuario()
     {
         global $request;
@@ -39,6 +63,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS' ) {
         }
         echo $response;
     }
+
+
 
     function EditarUsuario(){
         global $request;
