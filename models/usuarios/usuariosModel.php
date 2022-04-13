@@ -10,7 +10,7 @@
             if ($query->affected_rows) {
                 $existe = $query->fetch();
                 if ($existe) {
-                    if (password_verify($json->password, $password)) {
+                    if (password_verify($json->contrasena, $password)) {
                         $_SESSION['usuario'] = $usuario;
                         $_SESSION['nombre'] = $nombres." ".$apellidos;
                         $_SESSION['nivel'] = $nivel;

@@ -26,7 +26,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'OPTIONS' ) {
         global $request;
         $json = $request->datos;
         if($json->usuario != '' && $json->contrasena != ''){
-            if(!strlen($json->contrasena) < 6){
+            if(!strlen($json->contrasena) < 4){
                 $response = LoginModel($json);
             }else{
                 $response = 'La contraseña debe contener minimo 6 caracteres';
