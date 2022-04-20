@@ -31,9 +31,10 @@
     }
 
     function RegistroUsuarios($json){
+      $passwordencriptar = password_hash($json->contrasena, PASSWORD_BCRYPT, ['cost' => 12,]);
         require_once('../config/conexion.php');
         $ejecutar = $mysqli->prepare("CALL insertarusuario(?,?,?,?,?,?,?)");
-        $ejecutar->bind_param("sssssss", $json->tipoDoc, $json->numDoc, $json->usuario, $json->nombres, $json->apellidos, $json->contrasena, $json->nivel);
+        $ejecutar->bind_param("sssssss", $json->tipoDoc, $json->numDoc, $json->usuario, $json->nombres, $json->apellidos, $passwordencriptar, $json->nivel);
         $ejecutar->execute();
         $ejecutar -> store_result();
         $ejecutar -> bind_result($datosalida);
